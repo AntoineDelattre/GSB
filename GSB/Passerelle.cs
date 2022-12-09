@@ -70,7 +70,7 @@ namespace GSB
         // le chargement des données spécifiques au visiteur connecté doit se faire à chaque fois en vidant les anciennes données 
         static public void chargerDonnees()
         {
-           
+
         }
 
 
