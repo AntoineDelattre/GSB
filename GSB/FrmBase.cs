@@ -33,8 +33,8 @@ namespace GSB {
                 e.Handled = true;
             }
         }
-        
-        private void FrmBase_FormClosed(object sender, FormClosedEventArgs e)
+
+        private void FrmBase_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (fermeture == 0)
             {
@@ -145,8 +145,7 @@ namespace GSB {
             
 
         }
-        #endregion
 
-        
+        #endregion        
     }
 }

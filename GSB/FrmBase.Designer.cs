@@ -170,7 +170,7 @@
             this.ficheMédicament.Name = "ficheMédicament";
             this.ficheMédicament.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
             this.ficheMédicament.ShowShortcutKeys = false;
-            this.ficheMédicament.Size = new System.Drawing.Size(180, 22);
+            this.ficheMédicament.Size = new System.Drawing.Size(165, 22);
             this.ficheMédicament.Text = "&Fiche médicament";
             this.ficheMédicament.Click += new System.EventHandler(this.ficheMédicamentToolStripMenuItem_Click);
             // 
@@ -189,7 +189,7 @@
             this.listePraticien.Name = "listePraticien";
             this.listePraticien.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.P)));
             this.listePraticien.ShowShortcutKeys = false;
-            this.listePraticien.Size = new System.Drawing.Size(180, 22);
+            this.listePraticien.Size = new System.Drawing.Size(135, 22);
             this.listePraticien.Text = "&Liste";
             this.listePraticien.Click += new System.EventHandler(this.listePraticien_Click);
             // 
@@ -199,7 +199,7 @@
             this.nouveauPraticien.ShortcutKeyDisplayString = " ";
             this.nouveauPraticien.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
             this.nouveauPraticien.ShowShortcutKeys = false;
-            this.nouveauPraticien.Size = new System.Drawing.Size(180, 22);
+            this.nouveauPraticien.Size = new System.Drawing.Size(135, 22);
             this.nouveauPraticien.Text = "&Ajouter";
             this.nouveauPraticien.Click += new System.EventHandler(this.nouveauPraticien_Click);
             // 
@@ -208,7 +208,7 @@
             this.modifierPraticien.Name = "modifierPraticien";
             this.modifierPraticien.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.U)));
             this.modifierPraticien.ShowShortcutKeys = false;
-            this.modifierPraticien.Size = new System.Drawing.Size(180, 22);
+            this.modifierPraticien.Size = new System.Drawing.Size(135, 22);
             this.modifierPraticien.Text = "&Mettre à jour";
             this.modifierPraticien.Click += new System.EventHandler(this.modifierPraticien_Click);
             // 
@@ -275,7 +275,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FrmBase";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmBase_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmBase_FormClosing);
             this.Load += new System.EventHandler(this.FrmBase_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmBase_KeyDown);
             this.menuStrip1.ResumeLayout(false);
