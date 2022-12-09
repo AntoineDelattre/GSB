@@ -61,7 +61,7 @@
             this.lblTitre.Location = new System.Drawing.Point(0, 29);
             this.lblTitre.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTitre.Name = "lblTitre";
-            this.lblTitre.Size = new System.Drawing.Size(542, 64);
+            this.lblTitre.Size = new System.Drawing.Size(636, 64);
             this.lblTitre.TabIndex = 9;
             this.lblTitre.Text = "Titre";
             this.lblTitre.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -77,7 +77,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(542, 29);
+            this.menuStrip1.Size = new System.Drawing.Size(636, 29);
             this.menuStrip1.TabIndex = 10;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -170,7 +170,7 @@
             this.ficheMédicament.Name = "ficheMédicament";
             this.ficheMédicament.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.M)));
             this.ficheMédicament.ShowShortcutKeys = false;
-            this.ficheMédicament.Size = new System.Drawing.Size(165, 22);
+            this.ficheMédicament.Size = new System.Drawing.Size(180, 22);
             this.ficheMédicament.Text = "&Fiche médicament";
             this.ficheMédicament.Click += new System.EventHandler(this.ficheMédicamentToolStripMenuItem_Click);
             // 
@@ -189,7 +189,7 @@
             this.listePraticien.Name = "listePraticien";
             this.listePraticien.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.P)));
             this.listePraticien.ShowShortcutKeys = false;
-            this.listePraticien.Size = new System.Drawing.Size(135, 22);
+            this.listePraticien.Size = new System.Drawing.Size(180, 22);
             this.listePraticien.Text = "&Liste";
             this.listePraticien.Click += new System.EventHandler(this.listePraticien_Click);
             // 
@@ -199,7 +199,7 @@
             this.nouveauPraticien.ShortcutKeyDisplayString = " ";
             this.nouveauPraticien.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.A)));
             this.nouveauPraticien.ShowShortcutKeys = false;
-            this.nouveauPraticien.Size = new System.Drawing.Size(135, 22);
+            this.nouveauPraticien.Size = new System.Drawing.Size(180, 22);
             this.nouveauPraticien.Text = "&Ajouter";
             this.nouveauPraticien.Click += new System.EventHandler(this.nouveauPraticien_Click);
             // 
@@ -208,7 +208,7 @@
             this.modifierPraticien.Name = "modifierPraticien";
             this.modifierPraticien.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.U)));
             this.modifierPraticien.ShowShortcutKeys = false;
-            this.modifierPraticien.Size = new System.Drawing.Size(135, 22);
+            this.modifierPraticien.Size = new System.Drawing.Size(180, 22);
             this.modifierPraticien.Text = "&Mettre à jour";
             this.modifierPraticien.Click += new System.EventHandler(this.modifierPraticien_Click);
             // 
@@ -229,9 +229,9 @@
             this.panel1.Controls.Add(this.lblVisiteur);
             this.panel1.Controls.Add(this.labelGsb);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 206);
+            this.panel1.Location = new System.Drawing.Point(0, 278);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(542, 37);
+            this.panel1.Size = new System.Drawing.Size(636, 37);
             this.panel1.TabIndex = 12;
             // 
             // lblVisiteur
@@ -265,16 +265,19 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(542, 243);
+            this.ClientSize = new System.Drawing.Size(636, 315);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblTitre);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FrmBase";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmBase_FormClosed);
             this.Load += new System.EventHandler(this.FrmBase_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmBase_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
