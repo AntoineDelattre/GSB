@@ -3,60 +3,65 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace GSB {
-    public partial class FrmVisiteAjout : FrmBase {
-        public FrmVisiteAjout() {
+namespace GSB
+{
+    public partial class FormVisite : FrmBase
+    {
+        public FormVisite()
+        {
             InitializeComponent();
         }
 
-        private void FrmVisiteAjout_Load(object sender, EventArgs e) {
+        private void FormVisite_Load(object sender, EventArgs e)
+        {
             parametrerComposant();
             initialiserDgv(dataGridView1);
+            initialiserDgv(dataGridView2);
             remplirDgv();
-            remplirGroup();
         }
 
-        private void parametrerComposant() {
-            this.lblTitre.Text = "Enregistrer un nouveau rendez-vous";
-            this.label1.Text = "Nouveau rendez-vous";
-            this.label2.Text = "Praticien";
-            this.label3.Text = "Motif";
-            this.label4.Text = "Date et heure";
+        private void parametrerComposant()
+        {
+            this.lblTitre.Text = "Consultation des visites";
+            this.label16.Text = "Sélectionner la visite pour afficher le détail";
+            this.label2.Text = "Practicien";
+            this.label4.Text = "Rue";
+            this.label6.Text = "Téléphone";
+            this.label8.Text = "Email";            
+            this.label10.Text = "Type praticien";            
+            this.label12.Text = "Spécialité";
+            this.label14.Text = "Motif";
+            this.label18.Text = "Bilan de la visite";
+            this.label19.Text = "Echantillions fournis";
+            this.label20.Text = "Médicaments présentés";
+
+            dataGridView2.ColumnHeadersVisible = false;
         }
+
+        #region procédures
 
         private void remplirDgv()
         {
             dataGridView1.Rows.Clear();
             foreach (Visite v in Globale.mesVisites)
             {
-                dataGridView1.Rows.Add(v.DateEtHeure, v.DateEtHeure, v.LePraticien.Ville, v.LePraticien.NomPrenom);
+                dataGridView1.Rows.Add(v.Id, v.DateEtHeure, v.DateEtHeure, v.LePraticien.Ville);
             }
         }
-
-        private void remplirGroup()
-        {
-            comboBox1.DataSource = Globale.mesPraticiens;
-
-            comboBox2.DataSource = Globale.lesMotifs;
-        }
-
-        #region procédures
 
         private void initialiserDgv(DataGridView dgv)
         {
             #region paramétrage au niveau du composant
 
             // accessibilité du composant
-            dgv.Enabled = false;
+            dgv.Enabled = true;
 
             // permissions
             dgv.AllowUserToDeleteRows = false;
@@ -64,7 +69,7 @@ namespace GSB {
             dgv.AllowUserToResizeColumns = false;
             dgv.AllowUserToResizeRows = false;
             dgv.AllowDrop = false;
-            dgv.AllowUserToOrderColumns = false;            
+            dgv.AllowUserToOrderColumns = false;
 
             //  bordures extérieures
             dgv.BorderStyle = BorderStyle.FixedSingle;
@@ -93,6 +98,9 @@ namespace GSB {
 
             // Entête aux niveaux des colonnes 
             dgv.ColumnHeadersVisible = true;
+
+            // Ajustement de la taille des colonnes : fill pour par un ajustement proportionnel à la largeur totale 
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             // Définition du style au niveau des entêtes de colonne    
             dgv.EnableHeadersVisualStyles = false;
@@ -128,17 +136,40 @@ namespace GSB {
             // Hauteur
         }
         
-        private void button1_Click(object sender, EventArgs e)
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            string nomPrenom = comboBox1.SelectedItem.ToString();
-            Praticien p = Globale.mesPraticiens.Find(x => string.Compare(x.NomPrenom, nomPrenom, true) == 0);
-            string motif = comboBox2.SelectedItem.ToString();
-            Motif m = Globale.lesMotifs.Find(x => x.Libelle == motif);
-            string message = "Ajout d'un rendez-vous";
-            DateTime d = dateTimePicker1.Value;
-            Passerelle.ajouterRendezVous(p.Id, m.Id, d, out message);
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                // Récupérer la première ligne sélectionnée
+                DataGridViewRow row = dataGridView1.SelectedRows[0];
+
+                // Récupérer les valeurs des cellules de la ligne sélectionnée
+                int cellValue1 = (int)dataGridView1.SelectedRows[0].Cells[0].Value; // Valeur de la première colonne
+
+                // Utiliser les valeurs récupérées pour effectuer les traitements nécessaires
+                foreach (Visite v in Globale.mesVisites)
+                {
+                    if (cellValue1 == v.Id)
+                    {
+                        label3.Text = v.LePraticien.NomPrenom;
+                        label5.Text = v.LePraticien.Rue;
+                        label7.Text = v.LePraticien.Telephone;
+                        label9.Text = v.LePraticien.Email;
+                        label11.Text = v.LePraticien.Type.Libelle;
+                        label13.Text = v.LePraticien.Specialite.Libelle;
+                        label15.Text = v.LeMotif.Libelle;
+                        label21.Text = v.Bilan;
+                        if (v.Bilan != "NULL")
+                        {
+                            
+                            dataGridView2.Rows.Add(v.Bilan, v.LeMotif.Libelle);
+                        }
+                    }
+                }
+            }
         }
 
         #endregion
     }
+
 }

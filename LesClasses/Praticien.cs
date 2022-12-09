@@ -13,10 +13,9 @@ namespace lesClasses {
     public class Praticien : IComparable<Praticien> {
 
         // Le tri par défaut d'un conteneur d'objets Praticien se fera sur le nom et le prénom
-
-        public int CompareTo(Praticien p) { 
+        public int CompareTo(Praticien p) {
             // à corriger
-            return 0; 
+            return 0;
         }
 
         // attribut

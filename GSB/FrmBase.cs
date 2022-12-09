@@ -84,14 +84,18 @@ namespace GSB {
 
         // consulter l'ensemble des visites réalisées
         private void consulterVisite_Click(object sender, EventArgs e) {
-         
+            FormVisite unFrmSaisieVisite = new FormVisite();
+            unFrmSaisieVisite.Show();
+            fermeture = 1;
+            Close();
         }
 
         // consultation des médicaments
         private void ficheMédicamentToolStripMenuItem_Click(object sender, EventArgs e) {
-
-
-
+            FrmMedicament unFrmMedicament = new FrmMedicament();
+            unFrmMedicament.Show();
+            fermeture = 1;
+            Close();
         }
 
         // consulter l'ensemble des échantillons distribués par le visiteur connecté

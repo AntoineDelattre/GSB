@@ -3,53 +3,40 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GSB {
-    public partial class FrmVisiteAjout : FrmBase {
-        public FrmVisiteAjout() {
+namespace GSB
+{
+    public partial class FrmVisiteListe : FrmBase
+    {
+        public FrmVisiteListe()
+        {
             InitializeComponent();
         }
 
-        private void FrmVisiteAjout_Load(object sender, EventArgs e) {
+        private void FrmVisiteListe_Load(object sender, EventArgs e)
+        {
             parametrerComposant();
-            initialiserDgv(dataGridView1);
+            initialiserDgv(dgvLesVisites);
             remplirDgv();
-            remplirGroup();
         }
 
-        private void parametrerComposant() {
-            this.lblTitre.Text = "Enregistrer un nouveau rendez-vous";
-            this.label1.Text = "Nouveau rendez-vous";
-            this.label2.Text = "Praticien";
-            this.label3.Text = "Motif";
-            this.label4.Text = "Date et heure";
-        }
-
-        private void remplirDgv()
+        private void parametrerComposant()
         {
-            dataGridView1.Rows.Clear();
-            foreach (Visite v in Globale.mesVisites)
-            {
-                dataGridView1.Rows.Add(v.DateEtHeure, v.DateEtHeure, v.LePraticien.Ville, v.LePraticien.NomPrenom);
-            }
-        }
-
-        private void remplirGroup()
-        {
-            comboBox1.DataSource = Globale.mesPraticiens;
-
-            comboBox2.DataSource = Globale.lesMotifs;
+            this.lblTitre.Text = "Consultation des visites";
+            this.lblVisite.Text = "Sélectionner la visite pour afficher le détail";
         }
 
         #region procédures
+
+        private void remplirDgv()
+        {
+            
+        }
 
         private void initialiserDgv(DataGridView dgv)
         {
@@ -64,7 +51,10 @@ namespace GSB {
             dgv.AllowUserToResizeColumns = false;
             dgv.AllowUserToResizeRows = false;
             dgv.AllowDrop = false;
-            dgv.AllowUserToOrderColumns = false;            
+            dgv.AllowUserToOrderColumns = false;
+
+            // largeur du composant à 320
+            dgv.Width = 333;
 
             //  bordures extérieures
             dgv.BorderStyle = BorderStyle.FixedSingle;
@@ -91,8 +81,36 @@ namespace GSB {
 
             #region paramètrage des colonnes
 
+            // Nombre de colonnes
+            dgv.ColumnCount = 3;
+
             // Entête aux niveaux des colonnes 
             dgv.ColumnHeadersVisible = true;
+
+            // Ajustement de la taille des colonnes : fill pour par un ajustement proportionnel à la largeur totale 
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // Paramétrage de la première colonne  : largeur, titre, alignement, tri 
+            dgv.Columns[0].Width = 80;
+            dgv.Columns[0].HeaderText = "Référence";
+            dgv.Columns[0].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgv.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgv.Columns[0].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            // Paramétrage de la seconde colonne
+            dgv.Columns[1].Width = 150;
+            dgv.Columns[1].HeaderText = "Désignation";
+            dgv.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgv.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgv.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
+
+            // Paramétrage de la seconde colonne
+            dgv.Columns[2].Width = 100;
+            dgv.Columns[2].HeaderText = "Quantité";
+            dgv.Columns[1].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.Columns[1].SortMode = DataGridViewColumnSortMode.NotSortable;
+
 
             // Définition du style au niveau des entêtes de colonne    
             dgv.EnableHeadersVisualStyles = false;
@@ -126,17 +144,6 @@ namespace GSB {
             #endregion
 
             // Hauteur
-        }
-        
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string nomPrenom = comboBox1.SelectedItem.ToString();
-            Praticien p = Globale.mesPraticiens.Find(x => string.Compare(x.NomPrenom, nomPrenom, true) == 0);
-            string motif = comboBox2.SelectedItem.ToString();
-            Motif m = Globale.lesMotifs.Find(x => x.Libelle == motif);
-            string message = "Ajout d'un rendez-vous";
-            DateTime d = dateTimePicker1.Value;
-            Passerelle.ajouterRendezVous(p.Id, m.Id, d, out message);
         }
 
         #endregion
