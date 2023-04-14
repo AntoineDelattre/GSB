@@ -1,4 +1,4 @@
-﻿// ------------------------------------------
+// ------------------------------------------
 // Nom du fichier : Passerelle.cs
 // Objet : classe Passerelle assurant l'alimentation des objets en mémoire
 // Auteur :
@@ -142,7 +142,6 @@ namespace GSB
             }
             curseur.Close();
 
-            List<Praticien> lesPraticiens = new List<Praticien>();
             cmd.CommandText = "select id, nom, prenom, rue, codePostal, ville, telephone, email, idType, idSpecialite from praticien where id in (Select id from mesPraticiens)";
             curseur = cmd.ExecuteReader();
             while (curseur.Read())
@@ -209,16 +208,23 @@ namespace GSB
                 CommandText = "ajouterRendezVous",
                 CommandType = CommandType.StoredProcedure,
             };
-            cmd.Parameters.AddWithValue("idPraticien", idPraticien);
-            cmd.Parameters.AddWithValue("idMotif", idMotif);
-            cmd.Parameters.AddWithValue("dateEtHeure", uneDate);
+            cnx.Open();
+            cmd.Parameters.AddWithValue("_idPraticien", idPraticien);
+            cmd.Parameters.AddWithValue("_idMotif", idMotif);
+            cmd.Parameters.AddWithValue("_dateEtHeure", uneDate);
             cmd.Parameters.Add("idVisite", MySqlDbType.Int32);
             cmd.Parameters["idVisite"].Direction = ParameterDirection.Output;
             cmd.ExecuteNonQuery();
             int idVisite = (Int32)cmd.Parameters["idVisite"].Value;
 
-            message = string.Empty;
-            return idVisite;
+            Praticien lePraticien = Globale.mesPraticiens.Find(x => x.Id == idPraticien);
+            Motif leMotif = Globale.lesMotifs.Find(x => x.Id == idMotif);
+            Globale.mesVisites.Add(new Visite(idVisite, lePraticien, leMotif, uneDate));
+
+            cnx.Close();
+            
+            message = "Ajout réussi";
+            return 1;
         }
 
         /// <summary>
@@ -235,9 +241,11 @@ namespace GSB
                 CommandText = "supprimerRendezVous",
                 CommandType = CommandType.StoredProcedure,
             };
+            cnx.Open();
             cmd.Parameters.AddWithValue("idVisite", idVisite);
             cmd.ExecuteNonQuery();
 
+            cnx.Close();
             message = string.Empty;
             return true;
         }
@@ -250,10 +258,12 @@ namespace GSB
                 CommandText = "modifierRendezVous",
                 CommandType = CommandType.StoredProcedure,
             };
+            cnx.Open();
             cmd.Parameters.AddWithValue("idVisite", idVisite);
             cmd.Parameters.AddWithValue("uneDateEtHeure", uneDateEtHeure);
             cmd.ExecuteNonQuery();
 
+            cnx.Close();
             message = string.Empty;
             return true;
         }
@@ -267,7 +277,8 @@ namespace GSB
                 CommandText = "enregistrerBilanVisite",
                 CommandType = CommandType.StoredProcedure,
                 Transaction = uneTransaction
-            };            
+            };
+            cnx.Open();
             try
             {
                 cmd.Parameters.AddWithValue("bilan", uneVisite.Bilan);
@@ -294,7 +305,7 @@ namespace GSB
 
 
             message = string.Empty;
-            return false;
+            return true;
         }
 
 
@@ -306,6 +317,7 @@ namespace GSB
                 CommandText = "ajouterPraticien",
                 CommandType = CommandType.StoredProcedure,
             };
+            cnx.Open();
             cmd.Parameters.AddWithValue("nom", nom);
             cmd.Parameters.AddWithValue("prenom", prenom);
             cmd.Parameters.AddWithValue("rue", rue);
@@ -320,8 +332,9 @@ namespace GSB
             cmd.ExecuteNonQuery();
             int idPraticien = (Int32)cmd.Parameters["idPraticien"].Value;
 
+            cnx.Close();
             message = string.Empty;            
-            return idPraticien;
+            return 1;
         }
 
 
@@ -333,6 +346,7 @@ namespace GSB
                 CommandText = "modifierPraticien",
                 CommandType = CommandType.StoredProcedure,
             };
+            cnx.Open();
             cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("nom", nom);
             cmd.Parameters.AddWithValue("prenom", prenom);
@@ -344,7 +358,8 @@ namespace GSB
             cmd.Parameters.AddWithValue("unType", unType);
             cmd.Parameters.AddWithValue("uneSpecialite", uneSpecialite);
             cmd.ExecuteNonQuery();
-            
+
+            cnx.Close();
             message = string.Empty;
             return true;
         }
@@ -357,9 +372,11 @@ namespace GSB
                 CommandText = "supprimerPraticien",
                 CommandType = CommandType.StoredProcedure,
             };
+            cnx.Open();
             cmd.Parameters.AddWithValue("id", id);
             cmd.ExecuteNonQuery();
 
+            cnx.Close();
             message = string.Empty;
             return true;
         }
